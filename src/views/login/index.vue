@@ -8,10 +8,19 @@
       </div>
       <div class="form">
         <a-space direction="vertical" size="middle" style="display: flex">
-          <a-input v-model:value="username" placeholder="请输入用户名" />
-          <a-input-password v-model:value="password" placeholder="请输入密码" />
+          <a-input
+            v-model:value="userInformation.username"
+            placeholder="请输入用户名"
+          />
+          <a-input-password
+            v-model:value="userInformation.password"
+            placeholder="请输入密码"
+          />
           <div class="captchaBox">
-            <a-input placeholder="请输入验证码" />
+            <a-input
+              v-model:value="userInformation.userCode"
+              placeholder="请输入验证码"
+            />
             <div class="captchaImg" @click="getCaptchaImg">
               <img height="38" :src="captchaImg" alt="" />
             </div>
@@ -26,33 +35,54 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, watch } from "vue";
+import { message } from "ant-design-vue";
+import {
+  ref,
+  reactive,
+  onMounted,
+  watch,
+  onBeforeMount,
+  onUpdated,
+  onBeforeUpdate,
+} from "vue";
 import initLoginBg from "./init.ts";
 import { CaptchaAPI, LoginAPI, GetUuidAPI } from "@/api/loginApi.js";
+import { useRouter } from "vue-router";
+
 const userInformation = reactive({
   username: "",
   password: "",
   userCode: "",
-  remember: true,
+  uuid: "",
 });
 const visible = ref(true);
 const captchaImg = ref("");
+const UuidAPIRes = ref("");
+// 路由跳转
+const router = useRouter();
 
 // 登录方法
 const gotoLogin = () => {
-  const params = {
-    // username: usernameVal,
-    // password: passwordVal,
-    // userCode: captchaVal,
-    uuid: localStorage.getItem("uuid"),
-  };
-  LoginAPI(params).then((res) => {});
+  const params = userInformation;
+  LoginAPI(params).then((res) => {
+    if (res.code === 1) {
+      // 1、提示登录成功
+      message.info("登录成功！");
+      // 2、保存token
+      // localStorage.setItem("lege-react-management-token", res.token);
+      // 3、跳转到/page1
+      router.push("/page1");
+      // 4、删除本地保存中的uuid
+      localStorage.removeItem("uuidVue");
+    }
+  });
 };
 // 点击验证码图片盒子的事件函数
 const getCaptchaImg = async () => {
   // uuid请求
   GetUuidAPI().then((res) => {});
   let getUuidAPIRes = await GetUuidAPI();
+  UuidAPIRes.value = getUuidAPIRes.data;
   // 做验证码的请求
   const params = { imageCodeKey: getUuidAPIRes.data };
   // 1、把图片数据显示在img上面
@@ -61,12 +91,21 @@ const getCaptchaImg = async () => {
   let url = window.URL.createObjectURL(
     new Blob([captchaAPIRes], { type: "image/png" })
   );
-  setCaptchaImg(url);
+  captchaImg.value = url;
   // 2、本地保存uuid，给登录的时候用
-  localStorage.setItem("uuid", getUuidAPIRes.data);
+  localStorage.setItem("uuidVue", getUuidAPIRes.data);
 };
 
+watch(UuidAPIRes, (newValue, oldValue) => {
+  if (newValue) {
+    console.log(
+      `我侦听到了UuidAPIRes状态的变化，当前值为${newValue},从而处理相关逻辑`
+    );
+    userInformation.uuid = newValue;
+  }
+});
 onMounted(() => {
+  getCaptchaImg();
   initLoginBg();
   window.onresize = function () {
     initLoginBg();
@@ -112,6 +151,20 @@ onMounted(() => {
         left: auto;
         background: linear-gradient(to left, rgba(255, 255, 255, 0), #1976d2);
         right: -20px;
+      }
+    }
+    .form {
+      display: flex;
+      flex-direction: column;
+      .captchaBox {
+        display: flex;
+        flex-direction: row;
+        .captchaImg {
+          padding-left: 4px;
+          img {
+            border-radius: 6px;
+          }
+        }
       }
     }
   }

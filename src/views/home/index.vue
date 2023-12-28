@@ -1,9 +1,15 @@
 <template>
   <div class="name-container">
-    <a-layout>
-      <a-layout-sider class="siderStyle"><MainMenu /></a-layout-sider>
+    <a-layout class="site-layout">
+      <a-layout-sider>
+        <div class="logo"></div>
+        <MainMenu />
+      </a-layout-sider>
       <a-layout>
-        <a-layout-header class="headerStyle">
+        <a-layout-header
+          class="site-layout-background"
+          style="margin: 6px 6px 0 6px"
+        >
           <a-breadcrumb>
             <a-breadcrumb-item>Home</a-breadcrumb-item>
             <a-breadcrumb-item
@@ -15,9 +21,12 @@
             <a-breadcrumb-item>An Application</a-breadcrumb-item>
           </a-breadcrumb>
         </a-layout-header>
-        <a-layout-content class="contentStyle">
+        <a-layout-content
+          class="site-layout-background"
+          style="margin: 6px 6px 0"
+        >
           <router-view></router-view>
-          </a-layout-content>
+        </a-layout-content>
         <a-layout-footer class="footerStyle">
           Ant Design ©2018 Created by Ant UED</a-layout-footer
         >
@@ -32,38 +41,20 @@ import MainMenu from "@/components/MainMenu.vue";
 
 <style lang="scss" scoped>
 .name-container {
-  min-height: 100vh;
+  // min-height: calc(100vh - 100px);
+  // min-height: 100vh;
   :where(
       .css-dev-only-do-not-override-1qb1s0s
     ).ant-layout.ant-layout-has-sider {
-    min-height: 100vh;
-  }
-  .headerStyle {
-    text-align: center;
-    color: #fff;
-    height: 64;
-    padding-inline: 10;
-    background-color: #7dbcea;
-    display: flex;
-    align-items: center;
-  }
-  .contentStyle {
-    text-align: center;
-    min-height: 120;
-    line-height: 120px;
-    color: #fff;
-    background-color: #108ee9;
-  }
-  .siderStyle {
-    text-align: center;
-    line-height: 120px;
-    color: #fff;
-    background-color: #3ba0e9;
+    // min-height: 100vh;
   }
   .footerStyle {
+    padding: 0;
     text-align: center;
-    color: #fff;
-    background-color: #7dbcea;
+    line-height: 48px;
+  }
+  .site-layout {
+    min-height: 100vh;
   }
 }
 </style>

@@ -49,18 +49,18 @@ const router = createRouter({
   routes,
 });
 // 全局守卫：登录拦截 本地没有存token,请重新登录
-router.beforeEach((to, from, next) => {
-  // 判断有没有登录
-  if (!localStorage.getItem("token")) {
-    if (to.name == "login") {
-      next();
-    } else {
-      router.push("login");
-    }
-  } else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   // 判断有没有登录
+//   if (!localStorage.getItem("token")) {
+//     if (to.name == "login") {
+//       next();
+//     } else {
+//       router.push("login");
+//     }
+//   } else {
+//     next();
+//   }
+// });
 
 /**
  * 输出对象
