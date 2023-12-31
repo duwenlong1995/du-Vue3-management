@@ -26,7 +26,5 @@ export default function useContextmenu(containerRef) {
     window.removeEventListener("click", closeMenu, true);
     window.removeEventListener("contextmenu", closeMenu, true);
   });
-  console.log(x.value, y.value);
-  console.log(showMenu.value);
   return { x, y, showMenu };
 }

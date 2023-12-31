@@ -12,13 +12,29 @@
           class="contextmenu"
           v-if="showMenu"
           :style="{ left: x + 'px', top: y + 'px' }"
+          style="
+            position: fixed;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          "
         >
-          <div class="menu-list">
+          <div
+            class="menu-list"
+            style="
+              min-width: 100px;
+              min-height: 150px;
+              border-radius: 4px;
+              position: fixed,
+              background-color: #fff;
+            "
+          >
             <div
               class="menu-item"
               v-for="(item, i) in menu"
               :key="item.label"
               @click="handleClick(item)"
+              style="padding: 5px 10px; cursor: pointer; border-radius: 4px"
             >
               {{ item.label }}
             </div>
@@ -70,30 +86,7 @@ const handleAfterEnter = (el) => {
 
 <style lang="scss" scoped>
 .menuRight-container {
-  display: flex;
   .contextmenu {
-    position: absolute;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    white-space: nowrap;
-    max-width: 5%;
-    overflow: hidden;
-    .menu-list {
-      overflow: hidden;
-      .menu-item {
-        display: inline-block;
-        padding: 5px 10px;
-        cursor: pointer;
-        color: #333;
-        font-size: 14px;
-      }
-      .menu-item:hover {
-        background-color: #f5f5f5;
-      }
-    }
   }
 }
 </style>
