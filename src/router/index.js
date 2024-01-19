@@ -11,6 +11,7 @@ const routes = [
   {
     path: "/home",
     name: "home",
+    label: "首页",
     title: "首页",
     component: () => import("@/views/home/index.vue"),
     children: [
@@ -18,19 +19,50 @@ const routes = [
         path: "/page1",
         name: "page1",
         title: "page1",
-        component: () => import("@/views/page1/index.vue"),
+        icon: () => h(PieChartOutlined),
+        component: () => import("@/views/home/page1/index.vue"),
       },
       {
         path: "/page2",
         name: "page2",
         title: "page2",
-        component: () => import("@/views/page2/index.vue"),
+        icon: () => h(PieChartOutlined),
+        component: () => import("@/views/home/page2/index.vue"),
+      },
+      {
+        path: "/page3",
+        name: "page3",
+        title: "page3",
+        icon: () => h(PieChartOutlined),
+        component: () => import("@/views/home/page3/index.vue"),
+      },
+      {
+        path: "/page4",
+        name: "page4",
+        title: "page4",
+        icon: () => h(PieChartOutlined),
+        component: () => import("@/views/home/page4/index.vue"),
+      },
+      {
+        path: "/page5",
+        name: "page5",
+        title: "page5",
+        icon: () => h(PieChartOutlined),
+        component: () => import("@/views/home/page5/index.vue"),
       },
     ],
   },
   {
+    path: "/manage",
+    name: "manage",
+    title: "管理",
+    icon: () => h(PieChartOutlined),
+    component: () => import("@/views/manage/index.vue"),
+  },
+  {
     path: "/login",
     name: "login",
+    icon: () => h(PieChartOutlined),
     component: () => import("@/views/login/index.vue"),
   },
   {
@@ -49,18 +81,18 @@ const router = createRouter({
   routes,
 });
 // 全局守卫：登录拦截 本地没有存token,请重新登录
-// router.beforeEach((to, from, next) => {
-//   // 判断有没有登录
-//   if (!localStorage.getItem("token")) {
-//     if (to.name == "login") {
-//       next();
-//     } else {
-//       router.push("login");
-//     }
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  // 判断有没有登录
+  if (!localStorage.getItem("token")) {
+    if (to.name == "login") {
+      next();
+    } else {
+      router.push("login");
+    }
+  } else {
+    next();
+  }
+});
 
 /**
  * 输出对象

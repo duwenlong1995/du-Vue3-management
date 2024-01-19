@@ -69,7 +69,7 @@ const gotoLogin = () => {
       // 1、提示登录成功
       message.info("登录成功！");
       // 2、保存token
-      // localStorage.setItem("lege-react-management-token", res.token);
+      localStorage.setItem("token", res.data.token);
       // 3、跳转到/page1
       router.push("/page1");
       // 4、删除本地保存中的uuid

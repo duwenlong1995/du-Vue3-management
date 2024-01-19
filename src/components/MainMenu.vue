@@ -13,8 +13,8 @@
 </template>
 
 <script setup>
-import { reactive, watch, h, ref } from "vue";
-import { useRouter } from "vue-router";
+import { reactive, watch, h, ref, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import {
   PieChartOutlined,
   MailOutlined,
@@ -30,12 +30,30 @@ const state = reactive({
 });
 // 获取路由数据
 const router = useRouter();
-//点击菜单跳转路由
-const handleClick = (e) => {
-  router.push(e.key);
+const route = useRoute();
+
+// //  控制只打开一个
+// function onOpenChange(openKeys) {
+//   // 将当前打开的父级菜单存入缓存中
+//   localStorage.setItem("systemOpenKeys", JSON.stringify(openKeys));
+//   const latestOpenKey = openKeys.find((key) => openKeys.indexOf(key) === -1);
+//   if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+//     openKeys = openKeys;
+//   } else {
+//     openKeys = latestOpenKey ? [latestOpenKey] : [];
+//   }
+// }
+// 点击菜单，路由跳转,注意的是当点击MenuItem才会触发此函数
+const handleClick = ({ item, key, keyPath }) => {
+  // 获取到当前的key,并且跳转
+  router.push({
+    path: key,
+  });
 };
-// const list = router.getRoutes().filter((v) => v.meta.isShow); // filter过滤出子路由中对页面渲染的结果
-// console.log(list);
+
+onMounted(() => {
+  console.log(route.matched);
+});
 const items = reactive([
   {
     label: "首页",
@@ -55,21 +73,33 @@ const items = reactive([
         key: "/page2",
         icon: () => h(PieChartOutlined),
       },
+      {
+        label: "page3",
+        title: "page3",
+        key: "/page3",
+        icon: () => h(PieChartOutlined),
+      },
+      {
+        label: "page4",
+        title: "page4",
+        key: "/page4",
+        icon: () => h(PieChartOutlined),
+      },
+      {
+        label: "page5",
+        title: "page5",
+        key: "/page5",
+        icon: () => h(PieChartOutlined),
+      },
     ],
   },
   {
-    label: "page1",
-    title: "page1",
-    key: "/page1",
+    label: "manage",
+    title: "manage",
+    key: "/manage",
     icon: () => h(PieChartOutlined),
   },
 ]);
-watch(
-  () => state.openKeys,
-  (_val, oldVal) => {
-    state.preOpenKeys = oldVal;
-  }
-);
 const toggleCollapsed = () => {
   state.collapsed = !state.collapsed;
   state.openKeys = state.collapsed ? [] : state.preOpenKeys;

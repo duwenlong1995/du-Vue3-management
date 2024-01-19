@@ -1,0 +1,16 @@
+.menu-list {
+  padding: 3px 3px;
+  min-width: 100px;
+  min-height: 150px;
+  border-radius: 4px;
+  background-color: #fff;
+  .menu-item {
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .menu-item:hover {
+    color: #fff;
+    background-color: #002060;
+  }
+}

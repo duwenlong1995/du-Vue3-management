@@ -12,29 +12,13 @@
           class="contextmenu"
           v-if="showMenu"
           :style="{ left: x + 'px', top: y + 'px' }"
-          style="
-            position: fixed;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-          "
         >
-          <div
-            class="menu-list"
-            style="
-              min-width: 100px;
-              min-height: 150px;
-              border-radius: 4px;
-              position: fixed,
-              background-color: #fff;
-            "
-          >
+          <div class="menu-list">
             <div
               class="menu-item"
               v-for="(item, i) in menu"
               :key="item.label"
               @click="handleClick(item)"
-              style="padding: 5px 10px; cursor: pointer; border-radius: 4px"
             >
               {{ item.label }}
             </div>
@@ -47,7 +31,7 @@
 
 <script setup>
 import { ref } from "vue";
-import useContextmenu from "@/hooks//useContextmenu.js";
+import useContextmenu from "@/hooks/useContextmenu.js";
 const props = defineProps({
   menu: {
     type: Array,
@@ -71,12 +55,10 @@ const handleEnter = (el) => {
   const h = el.clientHeight;
   el.style.height = 0;
   requestAnimationFrame(() => {
-    el.style.height = h + "px";
-    el.style.transition = ".5s";
-    // requestAnimationFrame(() => {
-    //   el.style.height = h + "px";
-    //   el.style.transition = ".5s";
-    // });
+    requestAnimationFrame(() => {
+      el.style.height = h + "px";
+      el.style.transition = ".5s";
+    });
   });
 };
 const handleAfterEnter = (el) => {
@@ -85,6 +67,38 @@ const handleAfterEnter = (el) => {
 </script>
 
 <style lang="scss" scoped>
+.contextmenu {
+  position: fixed;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+// 过度样式
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 2s ease;
+}
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+.menu-list {
+  padding: 3px 3px;
+  min-width: 100px;
+  min-height: 150px;
+  border-radius: 4px;
+  position: fixed;
+  background-color: #fff;
+  .menu-item {
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .menu-item:hover {
+    color: #fff;
+    background-color: #002060;
+  }
+}
+
 .menuRight-container {
   .contextmenu {
   }
