@@ -1,5 +1,6 @@
 <template>
   <div class="name-container">
+    <a-switch v-model:checked="checked" @change="onChange($event)" />
     <menuRight class="block" :menu="menuData" @select="choose">
       <dTable
         class="card"
@@ -21,7 +22,22 @@ import dTable from "@/components/table/table.vue";
 import { listDataApi } from "@/api/tableDataApi.js";
 import { message } from "ant-design-vue";
 import useRequestTable from "@/hooks/useRequestTable.js";
-
+import useTheme from "@/hooks/useTheme.js";
+const { isDarkTheme, isLightTheme } = useTheme();
+onMounted(() => {
+  isLightTheme();
+});
+const checked = ref(false);
+function onChange(val) {
+  console.log(val);
+  if (val === true) {
+    isDarkTheme.value = true;
+    isLightTheme();
+  } else if (val === false) {
+    isDarkTheme.value = false;
+    isLightTheme();
+  }
+}
 const menuData = [
   { label: "添加", key: 0 },
   { label: "编辑", key: 1 },
@@ -39,7 +55,10 @@ const params = {
   name: "admin",
 };
 const { data, error, loading, fetchData } = useRequestTable();
-fetchData(listDataApi, params);
+onMounted(() => {
+  fetchData(listDataApi, params);
+});
+
 if (data.value) {
   console.log(data.value);
 } else {
@@ -47,6 +66,9 @@ if (data.value) {
 }
 
 const tableData = reactive([
+  { name: "张三", age: 28, gender: "男", type: "input", key: 0 },
+  { name: "李四", age: 32, gender: "男", type: "select", key: 1 },
+  { name: "王五", age: 22, gender: "女", type: "input", key: 2 },
   { name: "张三", age: 28, gender: "男", type: "input", key: 0 },
   { name: "李四", age: 32, gender: "男", type: "select", key: 1 },
   { name: "王五", age: 22, gender: "女", type: "input", key: 2 },

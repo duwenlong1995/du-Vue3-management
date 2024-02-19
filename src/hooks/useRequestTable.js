@@ -13,7 +13,7 @@ export default function useRequestTable() {
       // 调用 API 函数或其他异步逻辑
       const res = await requestApi(params);
       // 更新data值为从服务器获取的数据
-      data.value = res.data.records;
+      data.value = res.data;
     } catch (e) {
       // 捕获错误并更新错误变量
       error.value = e;
@@ -21,7 +21,6 @@ export default function useRequestTable() {
       loading.value = false;
     }
   }
-  console.log(data.value);
   // 返回一个包含数据和错误信息的数组
   return { data, error, loading, fetchData };
 }

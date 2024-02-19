@@ -1,4 +1,13 @@
 $color: #fcf;
+
+// 右键菜单组件
+// hover文字颜色
+$fontHoverColor: var(--font-color, #fff);
+// hover背景颜色
+$HoverBgColor: var(--hoverBg-color, #002060);
+// 背景颜色
+$boxBgColor: var(--bg-color, #fff);
+
 body {
   background-color: $color;
   // 禁用文字选中
