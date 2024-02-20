@@ -1,6 +1,8 @@
 body {
   background-color: #fcf;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 
 img {
@@ -16,4 +18,4 @@ img {
 .site-layout .site-layout-background {
   background: #ccc;
   border-radius: 6px;
-}
+}/*# sourceMappingURL=global.css.map */

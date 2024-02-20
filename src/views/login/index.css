@@ -5,33 +5,26 @@
   color: #fff;
   height: 38px;
 }
-
 .form ::v-deep .ant-space-item .ant-input {
   background-color: rgba(255, 255, 255, 0);
 }
-
 .form ::v-deep .ant-input::-webkit-input-placeholder {
   color: rgba(24, 144, 255, 0.8);
 }
-
 .form ::v-deep .ant-input-password .ant-input {
   height: 28px;
 }
-
 .form ::v-deep .ant-input-password-icon.anticon,
 .form .ant-input-password-icon.anticon:hover {
   color: #1890ff;
 }
-
 .form .captchaBox {
   display: flex;
 }
-
 .form .captchaBox .captchaImg {
   margin-left: 20px;
   cursor: pointer;
 }
-
 .form .loginBtn {
   height: 38px;
-}
+}/*# sourceMappingURL=index.css.map */
